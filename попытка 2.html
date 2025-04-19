@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Поздравление</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to right, #ffe6f0, #ffccdd);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hidden { display: none; }
+
+    #passwordSection {
+      text-align: center;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      background-color: #ff6699;
+      color: white;
+      cursor: pointer;
+    }
+
+    #greeting {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #cc0066;
+      margin-bottom: 10px;
+    }
+
+    img {
+      max-width: 300px;
+      margin-top: 10px;
+      border-radius: 15px;
+    }
+
+    #muteBtn {
+      margin-top: 20px;
+      background-color: #ff99bb;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 30px;
+      height: 40px;
+      background-color: pink;
+      border-radius: 50% 50% 45% 45%;
+      animation: float 5s ease-in infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="passwordSection">
+    <h2>Введи пароль, чтобы увидеть сюрприз 🎁</h2>
+    <input type="password" id="passwordInput" placeholder="Введи пароль">
+    <button onclick="checkPassword()">Открыть</button>
+    <p id="errorMessage" style="color: red;"></p>
+  </div>
+
+  <div id="greeting" class="hidden">
+    <h1>С 17 ДНЕМ РОЖДЕНИЯ, СОФИЯ! 🎉</h1>
+    <img src="https://i.pinimg.com/736x/aa/bc/22/aabc22d99e5d7e54d5cd34c98cd9d2dc.jpg" alt="Birthday cake">
+    <br>
+    <button id="muteBtn" onclick="toggleMusic()">🔇 Выключить музику?!</button>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mp3">
+    Ваш браузер не поддерживает аудио.
+  </audio>
+
+  <script>
+    const password = "8693";
+
+    function checkPassword() {
+      const input = document.getElementById("passwordInput").value;
+      if (input === password) {
+        document.getElementById("passwordSection").style.display = "none";
+        document.getElementById("greeting").classList.remove("hidden");
+        document.getElementById("bgMusic").play();
+        launchBalloons();
+      } else {
+        document.getElementById("errorMessage").textContent = "Неверный пароль. Попробуй еще раз.";
+      }
+    }
+
+    function toggleMusic() {
+      const audio = document.getElementById("bgMusic");
+      if (audio.paused) {
+        audio.play();
+        document.getElementById("muteBtn").textContent = "🔇 Виключить музику?!";
+      } else {
+        audio.pause();
+        document.getElementById("muteBtn").textContent = "🔊 Включить музику!!";
+      }
+    }
+
+    function launchBalloons() {
+      for (let i = 0; i < 25; i++) {
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.left = Math.random() * 100 + "vw";
+        balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 80%)`;
+        balloon.style.animationDuration = (4 + Math.random() * 3) + "s";
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 7000);
+      }
+    }
+  </script>
+</body>
+</html>
